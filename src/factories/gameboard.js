@@ -5,17 +5,27 @@ const gameboardFactory = () => {
     const getShips = () => ships
     const getMisses = () => misses
 
-    const generateShip = shipLength => {
-        const generateHits = length => {
-            return new Array(length).fill(false)
+    const generateShip = (shipLength, shipPositions) => {
+        const generateHits = (shipPositions) => {
+            const positions = []
+            if(shipPositions) {
+                shipPositions.forEach(pos => {
+                    positions.push({
+                        coordinates: {x: pos.x, y: pos.y},
+                        hit: false
+                    })
+                })
+            }
+    
+            return positions
         }
         const defaultSunk = false
     
-        return shipFactory(shipLength, generateHits(shipLength), defaultSunk)
+        return shipFactory(shipLength, generateHits(shipPositions), defaultSunk)
     }
 
     const placeShip = (coordinates, shipLength) => {
-        const newShip = generateShip(shipLength)
+        const newShip = generateShip(shipLength, coordinates)
         ships.push({
             coordinates,
             ship: newShip
