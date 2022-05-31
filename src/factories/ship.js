@@ -1,27 +1,21 @@
-const shipFactory = (length, hits, sunk) => {
+const shipFactory = (length, positions, sunk) => {
 
     const isSunk = () => {
-        if(hits.every(Boolean)) sunk = true
+        if(positions.every(v => v.hit == true)) sunk = true
     }
 
     const hit = position => {
-        hits[position] = true
-        isSunk()    
+        positions.find(n => n.coordinates.x == position.x && n.coordinates.y == position.y).hit = true
+        isSunk()
     }
 
-    const getSunk = () => {
-        return sunk
-    }
+    const getSunk = () => sunk
 
-    const getLength = () => {
-        return length
-    }
+    const getLength = () => length
 
-    const getHits = () => {
-        return hits
-    }
+    const getPositions = () => positions
 
-    return { getLength, getHits, getSunk, hit }
+    return { getLength, getPositions, getSunk, hit }
 }
 
 export default shipFactory
