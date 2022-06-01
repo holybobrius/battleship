@@ -1,3 +1,5 @@
+import shipFactory from "./ship";
+
 const gameboardFactory = () => {
     const ships = [];
     const misses = [];
@@ -33,18 +35,20 @@ const gameboardFactory = () => {
     }
 
     const receiveAttack = coordinates => {
-        ships.forEach(n => {
-            if(n.coordinates.x == coordinates.x && n.coordinates.y == coordinates.y) {
-                n.ship.hit(coordinates)
-                return;
-            }
-        })
-        misses.push(coordinates)
+        const allCoordinates = [].concat.apply([], ships.map(ship => ship.coordinates)) // array of all coordinates of ships
+        if(!allCoordinates.find(v => v.x == coordinates.x && v.y == coordinates.y)) {
+            misses.push(coordinates)
+        } else {
+            ships.map(ship => ship.ship).forEach(n => {
+                if(n.getPositions().find(v => v.coordinates.x == coordinates.x && v.coordinates.y == coordinates.y)) {
+                    n.hit(coordinates)
+                }
+            })
+        }
     }
 
-    const areAllShipsSunk = () => ships.every(v => v.getSunk == true)
-    
-    
+    const areAllShipsSunk = () => ships.map(ship => ship.ship).every(v => v.getSunk() == true)
+
     return { getShips, placeShip, getMisses, receiveAttack, areAllShipsSunk }
 }
 
