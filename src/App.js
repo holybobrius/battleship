@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import Gameboard from './components/Gameboard/Gameboard';
+import { startGame } from './gameLoop';
 
 function App() {
+
+  const players = startGame('Player 1', 'Player 2')
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Battleship.</h1>
+        <button>start game</button>
       </header>
+      <main>
+        <Gameboard name={players[0].getName()} player={players[1]} gameboard={players[1].getEnemyGameboard()}></Gameboard>
+        <Gameboard name={players[1].getName()} player={players[0]} gameboard={players[0].getEnemyGameboard()}></Gameboard>
+      </main>
     </div>
   );
 }
