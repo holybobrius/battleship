@@ -4,8 +4,10 @@ const playerFactory = (name, enemyGameboard) => {
     const getName = () => name
     const getEnemyGameboard = () => enemyGameboard
 
+
     const takeTurn = (coordinates) => {
         enemyGameboard.receiveAttack(coordinates)
+        console.log('move', coordinates)
         moves.push(coordinates)
     }
 
