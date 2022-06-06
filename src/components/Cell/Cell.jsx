@@ -15,8 +15,9 @@ const Cell = props => {
     
     return (
         <div className="cell" onClick={() => {
-            props.player.takeTurn({x: props.x, y: props.y})
+            props.enemyPlayer.takeTurn({x: props.x, y: props.y})
             checkContent()
+            props.player.randomMove();
         }}>{content}</div>
     )
 }

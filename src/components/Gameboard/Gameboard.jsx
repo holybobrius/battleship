@@ -4,7 +4,7 @@ import Cell from '../Cell/Cell'
 const Gameboard = props => {
     const cells = []
     for(let i = 0; i < 100; i++) {
-        cells.push(<Cell visible={props.visible} key={props.name + i} player={props.player} gameboard={props.gameboard} x={Math.floor(i / 10)} y={i % 10}></Cell>)
+        cells.push(<Cell visible={props.visible} key={props.name + i} enemyPlayer={props.enemyPlayer} player={props.player} gameboard={props.gameboard} x={Math.floor(i / 10)} y={i % 10}></Cell>)
     }
     return(
         <div>
