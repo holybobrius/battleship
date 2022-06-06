@@ -9,7 +9,10 @@ const Cell = props => {
         if([].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates)).find(pos => pos.x === props.x && pos.y === props.y)) setContent('X')
     }
 
-    useEffect(() => checkContent(), [])
+    useEffect(() => {
+        if(props.visible) checkContent()
+    }, [])
+    
     return (
         <div className="cell" onClick={() => {
             props.player.takeTurn({x: props.x, y: props.y})

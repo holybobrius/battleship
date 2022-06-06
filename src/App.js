@@ -13,8 +13,8 @@ function App() {
         <button>start game</button>
       </header>
       <main>
-        <Gameboard name={players[0].getName()} player={players[1]} gameboard={players[1].getEnemyGameboard()}></Gameboard>
-        <Gameboard name={players[1].getName()} player={players[0]} gameboard={players[0].getEnemyGameboard()}></Gameboard>
+        <Gameboard name={players[0].getName()} visible={true} player={players[1]} gameboard={players[1].getEnemyGameboard()}></Gameboard>
+        <Gameboard name={players[1].getName()} visible={false} player={players[0]} gameboard={players[0].getEnemyGameboard()}></Gameboard>
       </main>
     </div>
   );
