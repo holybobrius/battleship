@@ -2,41 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import './Cell.css'
 
 const Cell = props => {
-    const notInitialRender = useRef(false)
 
-    const [content, setContent] = useState('')
-
-    const displayShips = () => {
-        if([].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates)).find(pos => pos.x === props.coordinates.x && pos.y === props.coordinates.y)) setContent('X')
-    }
-
-    const checkContent = () => {
-        if(props.gameboard.getMisses().find(v => v.x == props.coordinates.x && v.y == props.coordinates.y)) setContent('●');
-        
-    }
+    const [content, setContent] = useState(props.hasShip ? 'X' : '')
 
     useEffect(() => {
-        if(props.visible) displayShips()
-    }, [])
-
-    useEffect(() => {
-        checkContent()
+        if(!props.hasShip) {
+            setContent(props.gameboard.getMisses().some(v => v.x === props.coordinates.x && v.y === props.coordinates.y) ? '●' : '')
+        }
     }, [props.turn])
 
-    const handleClick = () => {
-        props.enemyPlayer.takeTurn({x: props.coordinates.x, y: props.coordinates.y})
-        checkContent()
-        if([].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates)).find(pos => pos.x === props.coordinates.x && pos.y === props.coordinates.y)) {
-            setContent('X')
-        } else {
-            props.changeTurn();
-            props.player.randomMove();
-            props.changeTurn();
-        }
+    const attack = () => {
+        props.handleClick(props.coordinates)
+        if(props.hasShip) {
+            setContent('X!!!')
+        } else setContent(props.checkForMiss ? '●' : '')
     }
-    
+
     return (
-        <div className={`cell${!props.visible ? '' : ' blocked'}`} onClick={handleClick}>{content}</div>
+        <div className={`cell${!props.visible ? '' : ' blocked'}`} onClick={attack}>{content}</div>
     )
 }
 

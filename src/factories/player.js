@@ -7,14 +7,14 @@ const playerFactory = (name, enemyGameboard) => {
 
     const takeTurn = (coordinates) => {
         enemyGameboard.receiveAttack(coordinates)
-        console.log('move', coordinates)
         moves.push(coordinates)
     }
 
     const generateMove = () => {
         const x = Math.floor(Math.random() * 10)
         const y = Math.floor(Math.random() * 10)
-        if(moves.some(v => v.x == x && v.y == y)) {
+        if(moves.some(v => v.x == x && v.y == y) || !x || !y) {
+            console.log('bruh incedent')
             generateMove()
         } else {
             return {x, y}

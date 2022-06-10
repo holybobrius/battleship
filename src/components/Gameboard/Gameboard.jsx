@@ -3,23 +3,38 @@ import Cell from '../Cell/Cell'
 
 const Gameboard = props => {
     const cells = []
+    const shipCoords = [].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates))
     for(let i = 0; i < 100; i++) {
         const coordinates = {x: i % 10, y: Math.floor(i / 10)}
+        const hasShip = shipCoords.some(v => v.x === coordinates.x && v.y === coordinates.y)
+
+        const checkForMiss = coordinates => {
+            return props.gameboard.getMisses().some(v => v.x === coordinates.x && v.y === coordinates.y)
+        }
+
+        const attack = coordinates => {
+            props.gameboard.receiveAttack(coordinates)
+            props.changeTurn()
+            props.player.randomMove()
+            props.changeTurn()
+        }
+
+    
         cells.push(
         <Cell
-            turn={props.turn}
-            changeTurn={props.changeTurn}
-            visible={props.visible} 
-            key={props.name + i} 
-            enemyPlayer={props.enemyPlayer} 
-            player={props.player} 
-            gameboard={props.gameboard}
+            key={`id#${i}`}
             coordinates={coordinates}
+            hasShip={hasShip ? 'X' : ''}
+            handleClick={attack}
+            gameboard={props.gameboard}
+            checkForMiss={checkForMiss}
+            turn={props.turn}
         />)
     }
+
     return(
         <div>
-            <h2>{props.name}</h2>
+            <h2>{props.player.getName()}</h2>
             <div className="gameboard">
                 {cells}
             </div>

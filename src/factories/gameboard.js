@@ -35,10 +35,13 @@ const gameboardFactory = () => {
     }
 
     const receiveAttack = coordinates => {
-        const allCoordinates = [].concat.apply([], ships.map(ship => ship.coordinates)) // array of all coordinates of ships
-        if(!allCoordinates.find(v => v.x == coordinates.x && v.y == coordinates.y)) {
+        const allCoordinates = [].concat.apply([], ships.map(ship => ship.coordinates))
+        console.log(allCoordinates) // array of all coordinates of ships
+        if(!allCoordinates.some(v => {
+            console.log('v:', v, 'coordinates:', coordinates)
+            return (v.x === coordinates.x && v.y === coordinates.y)
+        })) {
             misses.push(coordinates)
-            console.log(misses)
         } else {
             ships.map(ship => ship.ship).forEach(n => {
                 if(n.getPositions().find(v => v.coordinates.x == coordinates.x && v.coordinates.y == coordinates.y)) {
@@ -47,6 +50,7 @@ const gameboardFactory = () => {
             })
         }
 
+        console.log('received attack at', coordinates.x, coordinates.y)
         if(areAllShipsSunk()) console.log('all ships sunk!')
     }
 

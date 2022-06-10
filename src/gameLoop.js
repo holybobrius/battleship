@@ -1,6 +1,47 @@
 import gameboardFactory from "./factories/gameboard";
 import playerFactory from "./factories/player";
 
+const randomNumber = max => {
+    return Math.floor(Math.random() * max);
+}
+
+const generateShips = (gameboard) => {
+    const usedSquares = []
+    
+    const generateShip = (length, horizontal) => {
+        let start = randomNumber(10-length)
+        let constCoord = randomNumber(10)
+        const shipCoords = []
+        for (let i = 0; i < length; i++) {
+            shipCoords.push(horizontal ? {x: start + i, y: constCoord} : {x: constCoord, y: start + i})
+        }
+        shipCoords.forEach(v => {
+            if(usedSquares.some(n => (n.x === v.x && n.y === v.y)
+                || (n.x === v.x + 1 && n.y === v.y)
+                || (n.x === v.x + 1 && n.y === v.y + 1)
+                || (n.x === v.x + 1 && n.y === v.y - 1)
+                || (n.x === v.x && n.y === v.y + 1) 
+                || (n.x === v.x && n.y === v.y - 1)
+                || (n.x === v.x - 1 && n.y === v.y + 1)
+                || (n.x === v.x - 1 && n.y === v.y)
+                || (n.x === v.x - 1&& n.y === v.y - 1))
+            ) {
+                generateShip(length, horizontal)
+            } else console.log('nay');
+         })
+        shipCoords.forEach(v => {
+            usedSquares.push(v)
+        })
+        gameboard.placeShip(shipCoords)
+        console.log(usedSquares);
+    }
+
+    generateShip(4, randomNumber(2) === 1 ? true : false)
+    generateShip(3, randomNumber(2) === 1 ? true : false)
+
+}
+
+
 export const startGame = (name1, name2) => {
     const gameboard1 = gameboardFactory();
     const gameboard2 = gameboardFactory();
