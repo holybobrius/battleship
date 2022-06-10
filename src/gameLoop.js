@@ -21,3 +21,8 @@ export const startGame = (name1, name2) => {
 
     return [player1, player2]
 }
+
+export const turn = (player, coordinates) => {
+    player.takeTurn(coordinates)
+    
+}
