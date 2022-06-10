@@ -26,14 +26,17 @@ const Cell = props => {
     const handleClick = () => {
         props.enemyPlayer.takeTurn({x: props.coordinates.x, y: props.coordinates.y})
         checkContent()
-        if([].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates)).find(pos => pos.x === props.coordinates.x && pos.y === props.coordinates.y)) setContent('X')
-        props.changeTurn();
-        props.player.randomMove();
-        props.changeTurn();
+        if([].concat.apply([], props.gameboard.getShips().map(ship => ship.coordinates)).find(pos => pos.x === props.coordinates.x && pos.y === props.coordinates.y)) {
+            setContent('X')
+        } else {
+            props.changeTurn();
+            props.player.randomMove();
+            props.changeTurn();
+        }
     }
     
     return (
-        <div className="cell" onClick={handleClick}>{content}</div>
+        <div className={`cell${!props.visible ? '' : ' blocked'}`} onClick={handleClick}>{content}</div>
     )
 }
 
