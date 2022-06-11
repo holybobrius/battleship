@@ -11,18 +11,22 @@ const playerFactory = (name, enemyGameboard) => {
     }
 
     const generateMove = () => {
+        console.log('func fired')
         const x = Math.floor(Math.random() * 10)
         const y = Math.floor(Math.random() * 10)
-        if(moves.some(v => v.x == x && v.y == y) || !x || !y) {
-            console.log('bruh incedent')
-            generateMove()
-        } else {
+        if(!(moves.some(v => v.x == x && v.y == y))) {
+            console.log('pass', x, y)
             return {x, y}
+        } else {
+            console.log('error', x, y)
+            return generateMove()
         }
     }
 
-    const randomMove = () => {
-        takeTurn(generateMove())
+    const randomMove = async () => {
+        const rslt = await generateMove()
+        console.log('rslt', rslt)
+        takeTurn(rslt)
     }
 
     return { getName, getMoves, getEnemyGameboard, takeTurn, randomMove }
