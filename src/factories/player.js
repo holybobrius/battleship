@@ -23,10 +23,8 @@ const playerFactory = (name, enemyGameboard) => {
         }
     }
 
-    const randomMove = async () => {
-        const rslt = await generateMove()
-        console.log('rslt', rslt)
-        takeTurn(rslt)
+    const randomMove = () => {
+        takeTurn(generateMove())
     }
 
     return { getName, getMoves, getEnemyGameboard, takeTurn, randomMove }

@@ -6,3 +6,7 @@
     grid-template-columns: repeat(10, auto);
     grid-template-rows: repeat(10, auto);
 }
+
+.blocked {
+    pointer-events: none;
+}

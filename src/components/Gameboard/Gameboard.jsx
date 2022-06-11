@@ -13,10 +13,12 @@ const Gameboard = props => {
         }
 
         const attack = coordinates => {
-            props.gameboard.receiveAttack(coordinates)
-            props.changeTurn()
-            props.player.randomMove()
-            props.changeTurn()
+            if(!props.enemyPlayer.getMoves().some(v => v.x === coordinates.x && v.y === coordinates.y)) {
+                props.enemyPlayer.takeTurn(coordinates)
+                props.changeTurn()
+                props.player.randomMove()
+                props.changeTurn()
+            }
         }
 
     
@@ -35,7 +37,7 @@ const Gameboard = props => {
     return(
         <div>
             <h2>{props.player.getName()}</h2>
-            <div className="gameboard">
+            <div className={`gameboard${props.blocked ? ' blocked' : ''}`}>
                 {cells}
             </div>
         </div>

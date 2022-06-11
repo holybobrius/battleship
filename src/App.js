@@ -19,8 +19,8 @@ function App() {
         <button>start game</button>
       </header>
       <main>
-        <Gameboard player={players[0]} gameboard={players[1].getEnemyGameboard()} turn={playersTurns[1]} changeTurn={changeTurn}/>
-        <Gameboard player={players[1]} gameboard={players[0].getEnemyGameboard()} turn={playersTurns[0]} changeTurn={changeTurn} />
+        <Gameboard player={players[0]} blocked={true} enemyPlayer={players[1]} gameboard={players[1].getEnemyGameboard()} turn={playersTurns[1]} changeTurn={changeTurn}/>
+        <Gameboard player={players[1]} enemyPlayer={players[0]} gameboard={players[0].getEnemyGameboard()} turn={playersTurns[0]} changeTurn={changeTurn} />
       </main>
     </div>
   );
