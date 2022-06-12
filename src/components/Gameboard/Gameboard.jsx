@@ -32,7 +32,11 @@ const Gameboard = props => {
             checkForMiss={checkForMiss}
             turn={props.turn}
         />)
+
+        
     }
+
+    // console.log(props.player.getName(), props.gameboard.getShips())
 
     return(
         <div>

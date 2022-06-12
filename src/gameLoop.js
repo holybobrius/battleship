@@ -6,38 +6,74 @@ const randomNumber = max => {
 }
 
 const generateShips = (gameboard) => {
-    const usedSquares = []
+    let usedSquares = {shipCoords: [], adjCoord: []}
     
-    const generateShip = (length, horizontal) => {
-        let start = randomNumber(10-length)
-        let constCoord = randomNumber(10)
-        const shipCoords = []
-        for (let i = 0; i < length; i++) {
-            shipCoords.push(horizontal ? {x: start + i, y: constCoord} : {x: constCoord, y: start + i})
-        }
-        shipCoords.forEach(v => {
-            if(usedSquares.some(n => (n.x === v.x && n.y === v.y)
-                || (n.x === v.x + 1 && n.y === v.y)
-                || (n.x === v.x + 1 && n.y === v.y + 1)
-                || (n.x === v.x + 1 && n.y === v.y - 1)
-                || (n.x === v.x && n.y === v.y + 1) 
-                || (n.x === v.x && n.y === v.y - 1)
-                || (n.x === v.x - 1 && n.y === v.y + 1)
-                || (n.x === v.x - 1 && n.y === v.y)
-                || (n.x === v.x - 1&& n.y === v.y - 1))
-            ) {
-                generateShip(length, horizontal)
-            } else console.log('nay');
-         })
-        shipCoords.forEach(v => {
-            usedSquares.push(v)
-        })
-        gameboard.placeShip(shipCoords)
-        console.log(usedSquares);
+    const generateShip = (size) => {
+        const horizontal = randomNumber(2) === 0 ? true : false
+
+        if(horizontal) {
+            let shipCoords = []
+            const x = randomNumber(10 - size)
+            const y = randomNumber(10)
+            for(let i = 0; i < size; i++) {
+                if(usedSquares.shipCoords.some(v => (v.x === x + i && v.y === y)) || (usedSquares.adjCoord.length !== 0 && usedSquares.adjCoord.some(n => n.x === x + i && n.y === y)))
+                {
+                    console.log('жопа', usedSquares)
+                    return generateShip(size)
+                } else {
+                    shipCoords.push({x: x + i, y: y})
+                    
+                }
+            }
+            usedSquares.shipCoords = usedSquares.shipCoords.concat(shipCoords)
+            const adjCoords = []
+            shipCoords.forEach(n => {
+                adjCoords.push({x: n.x, y: n.y + 1}, {x: n.x, y: n.y - 1})
+            })
+            adjCoords.push({x: shipCoords[0].x - 1, y: shipCoords[0].y}, {x: shipCoords[0].x - 1, y: shipCoords[0].y - 1}, {x: shipCoords[0].x - 1, y: shipCoords[0].y + 1})
+            adjCoords.push({x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y - 1}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y + 1})
+            usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
+            console.log(usedSquares)
+            gameboard.placeShip(shipCoords)
+        } else {
+
+            let shipCoords = []
+            const y = randomNumber(10 - size)
+            const x = randomNumber(10)
+            for(let i = 0; i < size; i++) {
+                if(usedSquares.shipCoords.some(v => (v.y === y + i && v.x === x)) || (usedSquares.adjCoord.length !== 0 && usedSquares.adjCoord.some(n => n.y === y + i && n.x === x)))
+                {
+                    console.log('жопа', usedSquares)
+                    return generateShip(size)
+                } else {
+                    shipCoords.push({y: y + i, x: x})
+                    
+                }
+            }
+            usedSquares.shipCoords = usedSquares.shipCoords.concat(shipCoords)
+            const adjCoords = []
+            shipCoords.forEach(n => {
+                adjCoords.push({y: n.y, x: n.x + 1}, {y: n.y, x: n.x - 1})
+            })
+            adjCoords.push({y: shipCoords[0].y - 1, x: shipCoords[0].x}, {y: shipCoords[0].y - 1, x: shipCoords[0].x - 1}, {y: shipCoords[0].y - 1, x: shipCoords[0].x + 1})
+            adjCoords.push({y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x - 1}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x + 1})
+            usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
+            console.log(usedSquares)
+            gameboard.placeShip(shipCoords)
+            }
+        
     }
 
-    generateShip(4, randomNumber(2) === 1 ? true : false)
-    generateShip(3, randomNumber(2) === 1 ? true : false)
+    generateShip(4)
+    generateShip(3)
+    generateShip(3)
+    generateShip(2)
+    generateShip(2)
+    generateShip(2)
+    generateShip(1)
+    generateShip(1)
+    generateShip(1)
+    generateShip(1)
 
 }
 
@@ -46,15 +82,9 @@ export const startGame = (name1, name2) => {
     const gameboard1 = gameboardFactory();
     const gameboard2 = gameboardFactory();
 
-    gameboard1.placeShip([{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}])
-    gameboard1.placeShip([{x: 2, y: 4}, {x: 2, y: 5}, {x: 2, y: 6}])
-    gameboard1.placeShip([{x: 2, y: 0}, {x: 2, y: 1}])
-    gameboard1.placeShip([{x: 6, y: 5}, {x: 6, y: 6}])
+    generateShips(gameboard1)
 
-    gameboard2.placeShip([{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}])
-    gameboard2.placeShip([{x: 2, y: 4}, {x: 2, y: 5}, {x: 2, y: 6}])
-    gameboard2.placeShip([{x: 2, y: 0}, {x: 2, y: 1}])
-    gameboard2.placeShip([{x: 6, y: 5}, {x: 6, y: 6}])
+
 
     const player1 = playerFactory(name1, gameboard2)
     const player2 = playerFactory(name2, gameboard1)
@@ -67,3 +97,13 @@ export const turn = (player, coordinates) => {
     player.takeTurn(coordinates)
     
 }
+
+/*
+                    || (v.x === x + i + 1 && v.y === y) 
+                    || (v.x === x + i && v.y === y + 1) 
+                    || (v.x === x + i && v.y === y - 1)  
+                    || (v.x === x + i + 1 && v.y === y - 1) 
+                    || (v.x === x + i - 1 && v.y === y - 1)
+                    || (v.x === x + i + 1 && v.y === y + 1) 
+                    || (v.x === x + i - 1 && v.y === y + 1)))
+*/
