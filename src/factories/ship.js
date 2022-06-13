@@ -1,4 +1,4 @@
-const shipFactory = (length, positions, sunk) => {
+const shipFactory = (length, positions, sunk, horizontal) => {
 
     const isSunk = () => {
         if(positions.every(v => v.hit == true)) sunk = true
@@ -7,7 +7,7 @@ const shipFactory = (length, positions, sunk) => {
 
     const hit = position => {
         positions.find(n => n.coordinates.x == position.x && n.coordinates.y == position.y).hit = true
-        isSunk()
+        return isSunk()
     }
 
     const getSunk = () => sunk
@@ -16,7 +16,9 @@ const shipFactory = (length, positions, sunk) => {
 
     const getPositions = () => positions
 
-    return { getLength, getPositions, getSunk, hit }
+    const getHorizontal = () => horizontal
+
+    return { getLength, getPositions, getSunk, hit, getHorizontal }
 }
 
 export default shipFactory

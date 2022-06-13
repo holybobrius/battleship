@@ -13,7 +13,7 @@ const Gameboard = props => {
         }
 
         const attack = coordinates => {
-            if(!props.enemyPlayer.getMoves().some(v => v.x === coordinates.x && v.y === coordinates.y)) {
+            if(!(props.enemyPlayer.getMoves().some(v => v.x === coordinates.x && v.y === coordinates.y) || props.gameboard.getMisses().some(v => v.x === coordinates.x && v.y === coordinates.y))) {
                 props.enemyPlayer.takeTurn(coordinates)
                 props.changeTurn()
                 props.player.randomMove()

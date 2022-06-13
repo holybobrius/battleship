@@ -34,7 +34,7 @@ const generateShips = (gameboard) => {
             adjCoords.push({x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y - 1}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y + 1})
             usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
             console.log(usedSquares)
-            gameboard.placeShip(shipCoords)
+            gameboard.placeShip(shipCoords, size, true)
         } else {
 
             let shipCoords = []
@@ -59,7 +59,7 @@ const generateShips = (gameboard) => {
             adjCoords.push({y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x - 1}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x + 1})
             usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
             console.log(usedSquares)
-            gameboard.placeShip(shipCoords)
+            gameboard.placeShip(shipCoords, size, false)
             }
         
     }
@@ -83,6 +83,7 @@ export const startGame = (name1, name2) => {
     const gameboard2 = gameboardFactory();
 
     generateShips(gameboard1)
+    generateShips(gameboard2)
 
 
 
@@ -97,13 +98,3 @@ export const turn = (player, coordinates) => {
     player.takeTurn(coordinates)
     
 }
-
-/*
-                    || (v.x === x + i + 1 && v.y === y) 
-                    || (v.x === x + i && v.y === y + 1) 
-                    || (v.x === x + i && v.y === y - 1)  
-                    || (v.x === x + i + 1 && v.y === y - 1) 
-                    || (v.x === x + i - 1 && v.y === y - 1)
-                    || (v.x === x + i + 1 && v.y === y + 1) 
-                    || (v.x === x + i - 1 && v.y === y + 1)))
-*/
