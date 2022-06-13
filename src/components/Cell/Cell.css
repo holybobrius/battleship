@@ -1,5 +1,5 @@
 .cell {
-    border: 1px solid #aaa;
+    border: 1px solid #E8E7EC;
     cursor: pointer;
     transition: ease 100ms;
     padding: 0;
@@ -8,12 +8,27 @@
     justify-content: center;
     width: 60px;
     height: 60px;
+    color: #AFAFAF
 }
 
 .cell:hover {
-    background-color: rgb(236, 236, 236);
+    background-color: #f0f0f3;
 }
 
-.blocked {
-    pointer-events: none;
+.blue {
+    background-color: #BFD3EF;
+    color: white;
+}
+
+.blue:hover {
+    background-color: #BFD3EF;
+}
+
+.red {
+    background-color: #F46A67;
+    color: white;
+}
+
+.red:hover {
+    background-color: #F46A67;
 }

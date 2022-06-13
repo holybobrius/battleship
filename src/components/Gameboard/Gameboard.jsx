@@ -13,13 +13,16 @@ const Gameboard = props => {
                 } else handleRandomMove()
             }
             props.enemyPlayer.takeTurn(coordinates)
+            if(props.gameboard.areAllShipsSunk()) props.handleEnd(props.enemyPlayer)
             props.changeTurn()
             if(!hasShip) {
                 handleRandomMove()
                 props.changeTurn()
+                if(props.player.getEnemyGameboard().areAllShipsSunk()) props.handleEnd(props.player)
             }
         }
     }
+
     const checkForMiss = coordinates => {
         return props.gameboard.getMisses().some(v => v.x === coordinates.x && v.y === coordinates.y)
     }
@@ -38,6 +41,8 @@ const Gameboard = props => {
             checkForMiss={checkForMiss}
             turn={props.turn}
             enemyPlayer={props.enemyPlayer}
+            visible={props.visible}
+            blocked={props.blocked}
         />)
 
         

@@ -1,7 +1,7 @@
 .gameboard {
-    width: 620px;
-    height: 620px;
-    border: 1px solid black;
+    min-width: 620px;
+    min-height: 620px;
+    border: 1px solid #c0bec4;
     display: grid;
     grid-template-columns: repeat(10, auto);
     grid-template-rows: repeat(10, auto);

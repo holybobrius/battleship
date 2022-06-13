@@ -62,13 +62,12 @@ const gameboardFactory = () => {
             }
         })
         misses.push(coordinates)
-        if (areAllShipsSunk()) console.log('all ships sunk!')
         return gotShip
     }
 
     const areAllShipsSunk = () => ships.map(ship => ship.ship).every(v => v.getSunk() == true)
 
-    return { getShips, placeShip, getMisses, receiveAttack }
+    return { getShips, placeShip, getMisses, receiveAttack, areAllShipsSunk }
 }
 
 export default gameboardFactory
