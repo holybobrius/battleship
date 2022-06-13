@@ -31,6 +31,7 @@ const Gameboard = props => {
             gameboard={props.gameboard}
             checkForMiss={checkForMiss}
             turn={props.turn}
+            enemyPlayer={props.enemyPlayer}
         />)
 
         
