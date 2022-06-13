@@ -2,7 +2,6 @@ const shipFactory = (length, positions, sunk, horizontal) => {
 
     const isSunk = () => {
         if(positions.every(v => v.hit == true)) sunk = true
-        console.log('ship sunk? ', positions.every(v => v.hit == true))
     }
 
     const hit = position => {

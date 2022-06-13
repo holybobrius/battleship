@@ -18,7 +18,6 @@ const generateShips = (gameboard) => {
             for(let i = 0; i < size; i++) {
                 if(usedSquares.shipCoords.some(v => (v.x === x + i && v.y === y)) || (usedSquares.adjCoord.length !== 0 && usedSquares.adjCoord.some(n => n.x === x + i && n.y === y)))
                 {
-                    console.log('жопа', usedSquares)
                     return generateShip(size)
                 } else {
                     shipCoords.push({x: x + i, y: y})
@@ -33,7 +32,6 @@ const generateShips = (gameboard) => {
             adjCoords.push({x: shipCoords[0].x - 1, y: shipCoords[0].y}, {x: shipCoords[0].x - 1, y: shipCoords[0].y - 1}, {x: shipCoords[0].x - 1, y: shipCoords[0].y + 1})
             adjCoords.push({x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y - 1}, {x: shipCoords[size - 1].x + 1, y: shipCoords[size - 1].y + 1})
             usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
-            console.log(usedSquares)
             gameboard.placeShip(shipCoords, size, true)
         } else {
 
@@ -43,7 +41,6 @@ const generateShips = (gameboard) => {
             for(let i = 0; i < size; i++) {
                 if(usedSquares.shipCoords.some(v => (v.y === y + i && v.x === x)) || (usedSquares.adjCoord.length !== 0 && usedSquares.adjCoord.some(n => n.y === y + i && n.x === x)))
                 {
-                    console.log('жопа', usedSquares)
                     return generateShip(size)
                 } else {
                     shipCoords.push({y: y + i, x: x})
@@ -58,7 +55,6 @@ const generateShips = (gameboard) => {
             adjCoords.push({y: shipCoords[0].y - 1, x: shipCoords[0].x}, {y: shipCoords[0].y - 1, x: shipCoords[0].x - 1}, {y: shipCoords[0].y - 1, x: shipCoords[0].x + 1})
             adjCoords.push({y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x - 1}, {y: shipCoords[size - 1].y + 1, x: shipCoords[size - 1].x + 1})
             usedSquares.adjCoord = usedSquares.adjCoord.concat(adjCoords)
-            console.log(usedSquares)
             gameboard.placeShip(shipCoords, size, false)
             }
         
