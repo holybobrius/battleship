@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import './App.css';
 import EndPopup from './components/EndPopup/EndPopup';
 import Gameboard from './components/Gameboard/Gameboard';
+import StartPopup from './components/StartPopup/StartPopup';
 import { startGame } from './gameLoop';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
   const [players, setPlayers] = useState()
   const [winner, setWinner] = useState()
   const [playersTurns, setPlayersTurns] = useState([true, false])
+  const [startPopupVisible, setStartPopupVisible] = useState(true)
 
   const changeTurn = () => {
     setPlayersTurns([!playersTurns[0], !playersTurns[1]])
@@ -18,11 +20,16 @@ function App() {
     setWinner(player)
   }
 
+  const handleSubmit = (name) => {
+    setPlayers(startGame(name, 'Computer'))
+    setStartPopupVisible(false)
+  }
+
   return (
     <div className="App">
+      {startPopupVisible && <StartPopup handleSubmit={handleSubmit}/>}
       <header>
         <h1>Battleship.</h1>
-        <button onClick={() => setPlayers(startGame('Player1', 'Player2'))}>start game</button>
         {winner && <EndPopup winner={winner}/>}
       </header>
       {players && <main>
