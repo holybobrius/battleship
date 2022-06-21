@@ -56,7 +56,7 @@ const gameboardFactory = () => {
                         adjCoords.push({ x: n.getPositions()[n.getLength() - 1].coordinates.x + 1, y: n.getPositions()[n.getLength() - 1].coordinates.y }, { x: n.getPositions()[n.getLength() - 1].coordinates.x + 1, y: n.getPositions()[n.getLength() - 1].coordinates.y - 1 }, { x: n.getPositions()[n.getLength() - 1].coordinates.x + 1, y: n.getPositions()[n.getLength() - 1].coordinates.y + 1 })
                     }
 
-                    adjCoords.forEach(value => misses.push(value))
+                    adjCoords.forEach(value => receiveAttack(value))
                 }
                 gotShip = true
             }

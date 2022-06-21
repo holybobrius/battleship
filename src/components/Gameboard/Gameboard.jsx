@@ -7,10 +7,15 @@ const Gameboard = props => {
     const attack = coordinates => {
         if(!(props.enemyPlayer.getMoves().some(v => v.x === coordinates.x && v.y === coordinates.y) || props.gameboard.getMisses().some(v => v.x === coordinates.x && v.y === coordinates.y))) {
             const hasShip = shipCoords.some(v => v.x === coordinates.x && v.y === coordinates.y)
-            const handleRandomMove = () => {
-                if(!props.player.randomMove()) {
-                    return
-                } else handleRandomMove()
+            const handleRandomMove = async (prevCoords) => {
+                const hitResult = props.player.randomMove(prevCoords)
+                console.log(hitResult)
+                if(!hitResult.hit) {
+                    return 
+                } else {
+                    const result = handleRandomMove(hitResult.coordinates)
+                    return result
+                }
             }
             props.enemyPlayer.takeTurn(coordinates)
             if(props.gameboard.areAllShipsSunk()) props.handleEnd(props.enemyPlayer)
@@ -28,7 +33,7 @@ const Gameboard = props => {
     }
 
     for(let i = 0; i < 100; i++) {
-        const coordinates = {x: i % 10, y: Math.floor(i / 10)}
+        const coordinates = { x: i % 10, y: Math.floor(i / 10) }
         const hasShip = shipCoords.some(v => v.x === coordinates.x && v.y === coordinates.y)
     
         cells.push(
